@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeal Online Solutions — AI Consulting & Fractional CTO</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060b18;
+  --bg2: #0c1525;
+  --blue: #2563eb;
+  --blue-light: #60a5fa;
+  --teal: #00d4aa;
+  --teal-dim: rgba(0,212,170,0.12);
+  --purple: #8b5cf6;
+  --text: #e2e8f8;
+  --text-dim: #64748b;
+  --text-mid: #94a3b8;
+  --border: rgba(255,255,255,0.07);
+  --card: rgba(255,255,255,0.03);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+/* ─── NOISE OVERLAY ─── */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9999; opacity:0.35;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index: 100;
+  padding: 0 6vw;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(6,11,24,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--teal); }
+.nav-links { display:flex; gap: 32px; list-style:none; }
+.nav-links a {
+  color: var(--text-mid);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-cta {
+  background: var(--blue);
+  color: #fff !important;
+  padding: 9px 22px;
+  border-radius: 8px;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  transition: background 0.2s, transform 0.2s !important;
+}
+.nav-cta:hover { background: #1d4ed8 !important; transform: translateY(-1px); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 100px 6vw 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 70% 40%, rgba(37,99,235,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0,212,170,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 85% 80%, rgba(139,92,246,0.07) 0%, transparent 50%);
+}
+
+.hero-grid {
+  position: absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+}
+
+.hero-content { position:relative; z-index:1; max-width: 680px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,212,170,0.08);
+  border: 1px solid rgba(0,212,170,0.25);
+  border-radius: 100px;
+  padding: 6px 16px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.6s ease both;
+}
+.badge-pulse {
+  width: 7px; height: 7px;
+  background: var(--teal);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(0,212,170,0.5);
+  animation: ripple 2s infinite;
+}
+@keyframes ripple {
+  0% { box-shadow: 0 0 0 0 rgba(0,212,170,0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(0,212,170,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,212,170,0); }
+}
+.hero-badge span { font-size: 12px; color: var(--teal); font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(42px, 6vw, 72px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.1s ease both;
+}
+.hero-title .grad {
+  background: linear-gradient(135deg, var(--blue-light), var(--teal));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-mid);
+  font-weight: 300;
+  max-width: 520px;
+  margin-bottom: 44px;
+  line-height: 1.7;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+.hero-actions {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+.btn-secondary {
+  background: transparent;
+  color: var(--text-mid);
+  padding: 14px 32px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+
+.hero-stats {
+  display: flex; gap: 40px; margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  animation: fadeUp 0.6s 0.4s ease both;
+}
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.stat-num span { color: var(--teal); }
+.stat-label { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(20px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ─── SECTIONS ─── */
+section { padding: 100px 6vw; }
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--teal);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 17px;
+  color: var(--text-mid);
+  font-weight: 300;
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 60px;
+}
+
+/* ─── SERVICES ─── */
+.services-bg { background: var(--bg2); }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.svc-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.svc-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(37,99,235,0.3);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.3);
+}
+.svc-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  border-radius: 18px 18px 0 0;
+  transition: opacity 0.3s;
+}
+.svc-card.c1::before { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+.svc-card.c2::before { background: linear-gradient(90deg, #00d4aa, #2563eb); }
+.svc-card.c3::before { background: linear-gradient(90deg, #8b5cf6, #2563eb); }
+.svc-card.c4::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+.svc-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin-bottom: 22px;
+}
+.svc-card.c1 .svc-icon { background: rgba(37,99,235,0.12); }
+.svc-card.c2 .svc-icon { background: rgba(0,212,170,0.1); }
+.svc-card.c3 .svc-icon { background: rgba(139,92,246,0.1); }
+.svc-card.c4 .svc-icon { background: rgba(245,158,11,0.1); }
+
+.svc-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.svc-desc {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.65;
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+.svc-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+.svc-card.c1 .svc-price { color: var(--blue-light); }
+.svc-card.c2 .svc-price { color: var(--teal); }
+.svc-card.c3 .svc-price { color: #c084fc; }
+.svc-card.c4 .svc-price { color: #fbbf24; }
+
+/* ─── PRICING ─── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.price-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 36px 30px;
+  position: relative;
+  transition: all 0.3s;
+}
+.price-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,0.3); }
+.price-card.featured {
+  border-color: rgba(37,99,235,0.4);
+  background: rgba(37,99,235,0.06);
+}
+.featured-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 16px;
+  border-radius: 100px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.price-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-mid);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.price-amount {
+  font-family: 'Syne', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.price-amount sup { font-size: 18px; vertical-align: super; }
+.price-period {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+.price-divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 24px;
+}
+.price-features { list-style: none; margin-bottom: 32px; }
+.price-features li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px;
+  color: var(--text-mid);
+  margin-bottom: 12px;
+  font-weight: 300;
+}
+.price-features li::before {
+  content: '✓';
+  color: var(--teal);
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.price-btn {
+  width: 100%;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: all 0.2s;
+  border: none; cursor: pointer;
+}
+.price-btn.primary {
+  background: var(--blue); color: #fff;
+}
+.price-btn.primary:hover { background: #1d4ed8; }
+.price-btn.outline {
+  background: transparent; color: var(--text-mid);
+  border: 1px solid var(--border);
+}
+.price-btn.outline:hover { border-color: rgba(255,255,255,0.2); color: #fff; }
+
+/* ─── HOW IT WORKS ─── */
+.how-bg { background: var(--bg2); }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  position: relative;
+}
+.steps::before {
+  content:'';
+  position:absolute;
+  top: 36px; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blue), var(--teal), transparent);
+  z-index: 0;
+}
+
+.step {
+  text-align: center;
+  padding: 0 20px;
+  position: relative; z-index: 1;
+}
+.step-num {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid rgba(37,99,235,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--blue-light);
+  margin: 0 auto 24px;
+  box-shadow: 0 0 0 6px var(--bg2);
+}
+.step-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.step-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ─── WHY US ─── */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+.why-card {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 20px;
+  transition: all 0.3s;
+}
+.why-card:hover { border-color: rgba(0,212,170,0.2); transform: translateX(4px); }
+.why-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: var(--teal-dim);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.why-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.why-desc { font-size: 13px; color: var(--text-dim); line-height: 1.55; font-weight: 300; }
+
+/* ─── INDUSTRIES ─── */
+.industries-bg { background: var(--bg2); }
+.ind-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.ind-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.ind-item:hover { border-color: rgba(37,99,235,0.3); transform: scale(1.03); }
+.ind-icon { font-size: 28px; margin-bottom: 10px; display: block; }
+.ind-name { font-size: 13px; color: var(--text-mid); font-weight: 400; }
+
+/* ─── CTA ─── */
+.cta-section {
+  padding: 100px 6vw;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 70% at 50% 50%, rgba(37,99,235,0.12) 0%, transparent 60%);
+}
+.cta-section .section-title { max-width: 600px; margin: 16px auto; }
+.cta-section .section-sub { margin: 0 auto 44px; }
+
+.cta-box {
+  display: inline-flex;
+  gap: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.contact-pill {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 20px;
+}
+.contact-pill .icon { font-size: 18px; }
+.contact-pill .info { }
+.contact-pill .label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+.contact-pill .value { font-size: 14px; color: var(--text); font-weight: 400; }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 32px 6vw;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+}
+.footer-logo span { color: var(--teal); }
+.footer-copy { font-size: 13px; color: var(--text-dim); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+
+.lang-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.lang-tag {
+  font-size: 11px;
+  background: rgba(37,99,235,0.1);
+  border: 1px solid rgba(37,99,235,0.2);
+  color: var(--blue-light);
+  padding: 3px 12px;
+  border-radius: 100px;
+  font-weight: 500;
+}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal { opacity:0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity:1; transform: translateY(0); }
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  nav { padding: 0 5vw; }
+  .nav-links { display: none; }
+  section { padding: 72px 5vw; }
+  .hero { padding: 100px 5vw 60px; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .steps::before { display: none; }
+  .steps { gap: 32px; }
+  footer { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ZEAL <span>ONLINE</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Book Free Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="badge-pulse"></div>
+      <span>Now Accepting Clients</span>
+    </div>
+    <h1 class="hero-title">
+      Your Business,<br>
+      <span class="grad">Powered by AI</span>
+    </h1>
+    <p class="hero-sub">
+      Zeal Online Solutions helps startups and small businesses unlock the power of Python &amp; Artificial Intelligence — without hiring a full-time tech team.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Book Free Discovery Call →</a>
+      <a href="#services" class="btn-secondary">View Services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">5<span>+</span></div>
+        <div class="stat-label">Years Python &amp; ML</div>
+      </div>
+      <div>
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Remote Delivery</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Languages Supported</div>
+      </div>
+      <div>
+        <div class="stat-num">0</div>
+        <div class="stat-label">Lock-in Contracts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services-bg">
+  <div class="reveal">
+    <span class="section-tag">What We Do</span>
+    <h2 class="section-title">Services Built for<br>Real Business Outcomes</h2>
+    <p class="section-sub">Every service is delivered remotely, designed around your timeline, and priced for growing businesses — not enterprise budgets.</p>
+  </div>
+  <div class="services-grid reveal">
+    <div class="svc-card c1">
+      <div class="svc-icon">🤖</div>
+      <div class="svc-name">AI & Tech Consulting</div>
+      <div class="svc-desc">Identify the gaps in your business where AI can save time and money. Get a custom roadmap and implementation support.</div>
+      <div class="svc-price">₹2,000 – ₹25,000 / month</div>
+    </div>
+    <div class="svc-card c2">
+      <div class="svc-icon">🚀</div>
+      <div class="svc-name">Fractional CTO</div>
+      <div class="svc-desc">Get a dedicated tech leader for 5–10 hrs/week. Strategy, architecture decisions, team guidance — without the full-time cost.</div>
+      <div class="svc-price">₹20,000 – ₹80,000 / month</div>
+    </div>
+    <div class="svc-card c3">
+      <div class="svc-icon">⚙️</div>
+      <div class="svc-name">Python Automation</div>
+      <div class="svc-desc">Automate repetitive tasks — invoices, reports, emails, data entry. Save 10–30 hours per week with smart Python scripts.</div>
+      <div class="svc-price">₹15,000 – ₹50,000 / project</div>
+    </div>
+    <div class="svc-card c4">
+      <div class="svc-icon">📊</div>
+      <div class="svc-name">Data Analytics & ML</div>
+      <div class="svc-desc">Turn your raw business data into insights. Sales forecasting, customer analysis, dashboards, and predictive models.</div>
+      <div class="svc-price">₹10,000 – ₹40,000 / project</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="reveal">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-title">Transparent,<br>Flexible Pricing</h2>
+    <p class="section-sub">No hidden fees. No long-term lock-in. Pay for what you need, when you need it.</p>
+  </div>
+  <div class="pricing-grid reveal">
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount"><sup>₹</sup>2,000</div>
+      <div class="price-period">one-time consultation</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>30-min strategy session</li>
+        <li>Business gap analysis</li>
+        <li>Written recommendations</li>
+        <li>Email follow-up support</li>
+      </ul>
+      <a href="#contact" class="price-btn outline">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="price-name">Growth</div>
+      <div class="price-amount"><sup>₹</sup>15,000</div>
+      <div class="price-period">per month · retainer</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>Weekly strategy calls</li>
+        <li>AI implementation support</li>
+        <li>Python automation (up to 2 tasks)</li>
+        <li>Dashboard setup</li>
+        <li>WhatsApp support access</li>
+      </ul>
+      <a href="#contact" class="price-btn primary">Book Free Call</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">CTO Partner</div>
+      <div class="price-amount"><sup>₹</sup>30,000</div>
+      <div class="price-period">per month · fractional CTO</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>10 hrs/week dedicated support</li>
+        <li>Tech roadmap ownership</li>
+        <li>Team guidance &amp; code review</li>
+        <li>Vendor &amp; tool selection</li>
+        <li>Priority response time</li>
+        <li>Monthly performance review</li>
+      </ul>
+      <a href="#contact" class="price-btn outline">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="process" class="how-bg">
+  <div style="text-align:center" class="reveal">
+    <span class="section-tag">How It Works</span>
+    <h2 class="section-title">From Problem to<br>Solution in 5 Steps</h2>
+    <p class="section-sub" style="margin:0 auto 72px">A structured, low-effort process designed around your busy schedule.</p>
+  </div>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery Call</div>
+      <div class="step-desc">30-min free call to understand your challenges and goals</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Gap Analysis</div>
+      <div class="step-desc">We identify exactly where AI and Python can save time &amp; money</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Solution Design</div>
+      <div class="step-desc">Custom roadmap tailored to your business and budget</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Implementation</div>
+      <div class="step-desc">Execute the solution remotely with regular progress updates</div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-title">Ongoing Support</div>
+      <div class="step-desc">Monthly retainer available for continuous improvements</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="reveal">
+    <span class="section-tag">Why Choose Us</span>
+    <h2 class="section-title">Built Different.<br>Priced for India.</h2>
+    <p class="section-sub">We combine technical depth with real business understanding — a rare combination that most consultants lack.</p>
+  </div>
+  <div class="why-grid reveal">
+    <div class="why-card">
+      <div class="why-icon">🧠</div>
+      <div>
+        <div class="why-title">Deep Python & ML Expertise</div>
+        <div class="why-desc">5+ years of hands-on experience with Python, Machine Learning, Deep Learning, and automation.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💼</div>
+      <div>
+        <div class="why-title">Real Business Acumen</div>
+        <div class="why-desc">We don't just code — we understand business operations, industry gaps, and ROI-driven thinking.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🌐</div>
+      <div>
+        <div class="why-title">100% Remote Delivery</div>
+        <div class="why-desc">Everything is delivered online. No travel, no office visits. Work with us from anywhere in India.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <div>
+        <div class="why-title">Affordable Flexible Plans</div>
+        <div class="why-desc">Pricing designed for Indian startups and small businesses. Scale up or down anytime.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🗣️</div>
+      <div>
+        <div class="why-title">English, Hindi & Tamil</div>
+        <div class="why-desc">We communicate in your language. No jargon, no barriers. Just clear, practical advice.</div>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔓</div>
+      <div>
+        <div class="why-title">No Lock-in Contracts</div>
+        <div class="why-desc">Month-to-month engagement. Stay because you're getting value, not because you're trapped.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="industries-bg">
+  <div style="text-align:center" class="reveal">
+    <span class="section-tag">Industries We Serve</span>
+    <h2 class="section-title">We Work Across<br>Many Sectors</h2>
+    <p class="section-sub" style="margin: 0 auto 56px">If your business has data, processes, or decisions — we can add value.</p>
+  </div>
+  <div class="ind-grid reveal">
+    <div class="ind-item"><span class="ind-icon">🏥</span><div class="ind-name">Healthcare</div></div>
+    <div class="ind-item"><span class="ind-icon">🛒</span><div class="ind-name">Retail & E-com</div></div>
+    <div class="ind-item"><span class="ind-icon">🎓</span><div class="ind-name">Education</div></div>
+    <div class="ind-item"><span class="ind-icon">🏭</span><div class="ind-name">Manufacturing</div></div>
+    <div class="ind-item"><span class="ind-icon">🚚</span><div class="ind-name">Logistics</div></div>
+    <div class="ind-item"><span class="ind-icon">💳</span><div class="ind-name">Fintech</div></div>
+    <div class="ind-item"><span class="ind-icon">🏗️</span><div class="ind-name">Real Estate</div></div>
+    <div class="ind-item"><span class="ind-icon">🌾</span><div class="ind-name">Agriculture</div></div>
+    <div class="ind-item"><span class="ind-icon">📱</span><div class="ind-name">Startups</div></div>
+    <div class="ind-item"><span class="ind-icon">🏨</span><div class="ind-name">Hospitality</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div class="reveal" style="position:relative;z-index:1">
+    <span class="section-tag">Get In Touch</span>
+    <h2 class="section-title">Ready to Transform<br>Your Business?</h2>
+    <p class="section-sub">Book a free 30-minute discovery call. No commitment, no pressure — just a real conversation about your challenges.</p>
+    <a href="mailto:zealonlinesolutions@gmail.com" class="btn-primary" style="margin-bottom:40px;display:inline-flex">
+      Book Free Discovery Call →
+    </a>
+    <br>
+    <div class="cta-box">
+      <div class="contact-pill">
+        <span class="icon">📧</span>
+        <div class="info">
+          <div class="label">Email</div>
+          <div class="value">zealonlinesolutions@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-pill">
+        <span class="icon">📱</span>
+        <div class="info">
+          <div class="label">Instagram</div>
+          <div class="value">@zealonlinesolutions</div>
+        </div>
+      </div>
+      <div class="contact-pill">
+        <span class="icon">🌍</span>
+        <div class="info">
+          <div class="label">Mode</div>
+          <div class="value">100% Remote · Pan India</div>
+        </div>
+      </div>
+    </div>
+    <div class="lang-tags" style="justify-content:center;margin-top:24px">
+      <span class="lang-tag">English</span>
+      <span class="lang-tag">Hindi</span>
+      <span class="lang-tag">Tamil</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">ZEAL <span>ONLINE</span> SOLUTIONS</a>
+  <div class="footer-copy">© 2026 Zeal Online Solutions. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Stagger children in grids
+document.querySelectorAll('.services-grid .svc-card, .pricing-grid .price-card, .why-grid .why-card, .ind-grid .ind-item').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.07}s`;
+});
+</script>
+</body>
+</html>
